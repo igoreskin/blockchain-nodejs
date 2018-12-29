@@ -1,4 +1,5 @@
 const SHA256 = require('crypto-js/sha256');
+let date = `${new Date()}`;
 
 class Block {
   constructor(index, timestamp, data, previousHash = '') {
@@ -30,7 +31,7 @@ class Blockchain {
   }
 
   createGenesisBlock() {
-    return new Block(0, "01/01/2018", "Genesis block", "0");
+    return new Block(0, date, "Genesis block", "0");
   }
 
   getLatestBlock() {
@@ -39,7 +40,6 @@ class Blockchain {
 
   addBlock(newBlock) {
     newBlock.previousHash = this.getLatestBlock().hash;
-    // newBlock.hash = newBlock.calculateHash();
     newBlock.mineBlock(this.difficulty);
     this.chain.push(newBlock);
   }
@@ -64,9 +64,11 @@ class Blockchain {
 let sampleChain = new Blockchain();
 
 console.log("\nMining block 1...");
-sampleChain.addBlock(new Block(1, "10/07/2018", {amount: 4}));
+sampleChain.addBlock(new Block(1, date, {amount: 4}));
 console.log("\nMining block 2...");
-sampleChain.addBlock(new Block(2, "12/07/2018", {amount: 10}));
+sampleChain.addBlock(new Block(2, date, {amount: 10}));
 
 console.log(JSON.stringify(sampleChain, null, 4));
+
 // console.log(sampleChain.isChainValid());
+// console.log(sampleChain.getLatestBlock());
